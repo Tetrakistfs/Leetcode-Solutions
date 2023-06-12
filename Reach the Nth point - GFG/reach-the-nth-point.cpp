@@ -5,28 +5,15 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
 	public:
-	    int sub(int rem, vector<int> &dp) {
-	       // cout<<rem<<endl;
-	        if(rem <= 1) {
-	            return dp[rem] = 1;
-	        }
-	        
-	        if(dp[rem] != -1) {
-	            return dp[rem];
-	        }
-	       int fs = sub(rem-1, dp);
-	       int ss = 0;
-	       if(rem > 1)
-	            ss = sub(rem-2, dp);
-	       return dp[rem] = (fs + ss)%1000000007;
-	    }
-	
 		int nthPoint(int n){
 		    // Code here
 		    vector<int> dp(n+1, -1);
-		    return sub(n, dp)%1000000007;
-		  //  for(auto i : dp)
-		  //      cout<<i;
+		    dp[0] = dp[1] = 1;
+		    
+		    for(int i = 2; i <= n; i++) {
+		        dp[i] = (dp[i-1] + dp[i-2]) % 1000000007;
+		    }
+		    return dp[n]%1000000007;
 		}   
 };
 
