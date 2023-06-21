@@ -7,8 +7,8 @@ class Solution {
   public:
     int sumOfNaturals(int n) {
         // code here
-        long long k=1000000007;
-        return (n%k)*((n+1)%k)%k/2;
+        int k = 1e9+7;
+        return (long)n*(long)(n+1)/2%k;
     }
 };
 
