@@ -6,33 +6,56 @@ using namespace std;
 class Solution
 {
 	public:
+	void dfs(int node, stack<int>& s, vector<bool>& vis, vector<int> adj[]) {
+	    vis[node] = true;
+	    
+	    for(auto nbr : adj[node]) {
+	        if(!vis[nbr])
+	            dfs(nbr, s, vis, adj);
+	    }
+	    s.push(node);
+	}
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
-	    vector<int> indegree(V,0);
-	    for(int i = 0; i < V; i++) {
-	        for(auto nbr : adj[i])
-	            indegree[nbr]++;
-	    }
+	   // vector<int> indegree(V,0);
+	   // for(int i = 0; i < V; i++) {
+	   //     for(auto nbr : adj[i])
+	   //         indegree[nbr]++;
+	   // }
 	    
-	    queue<int> q;
-	    vector<int> res;
-	    for(int i = 0; i < V; i++)
-	        if(indegree[i] == 0)
-	            q.push(i);
+	   // queue<int> q;
+	   // vector<int> res;
+	   // for(int i = 0; i < V; i++)
+	   //     if(indegree[i] == 0)
+	   //         q.push(i);
 	    
-	    while(!q.empty()) {
-	        int temp = q.front();
-	        q.pop();
-	        res.push_back(temp);
-	        for(auto node : adj[temp]) {
-	            indegree[node]--;
-	            if(indegree[node] == 0)
-	                q.push(node);
-	        }
-	    }
-	    return res;
+	   // while(!q.empty()) {
+	   //     int temp = q.front();
+	   //     q.pop();
+	   //     res.push_back(temp);
+	   //     for(auto node : adj[temp]) {
+	   //         indegree[node]--;
+	   //         if(indegree[node] == 0)
+	   //             q.push(node);
+	   //     }
+	   // }
+	   // return res;
+	   
+	   
+        stack<int> s;
+        vector<bool> vis(V, false);
+        for(int i = 0; i < V; i++) 
+            if(!vis[i])
+                dfs(i, s, vis, adj);
+        
+        vector<int> res;
+        while(!s.empty()) {
+            res.push_back(s.top());
+            s.pop();
+        }
+        return res;
 	}
 };
 
