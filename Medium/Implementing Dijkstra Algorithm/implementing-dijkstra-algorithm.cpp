@@ -11,28 +11,55 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({S,0});
+                                    /****USING PRIORITY QUEUE****/
+        // priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        // pq.push({S,0});
         
+        // vector<int> dist(V, 1e9);
+        // dist[S] = 0;
+        
+        // while(!pq.empty()) {
+        //     int temp = pq.top().first;
+        //     int wt = pq.top().second;
+        //     pq.pop();
+        //     for(auto node : adj[temp]) {
+        //         int adjnode = node[0];
+        //         int edgewt = node[1];
+        //         if(wt + edgewt < dist[adjnode]) {
+        //             dist[adjnode] = edgewt + wt;
+        //             pq.push({adjnode, dist[adjnode]});
+        //         }
+        //     }
+        // }
+        
+        // return dist;
+        
+                                    /****USING ORDERED SET****/
+        set<pair<int, int>> st;
         vector<int> dist(V, 1e9);
         dist[S] = 0;
+        st.insert({S, 0});
         
-        while(!pq.empty()) {
-            int temp = pq.top().first;
-            int wt = pq.top().second;
-            pq.pop();
-            for(auto node : adj[temp]) {
-                int adjnode = node[0];
-                int edgewt = node[1];
+        while(!st.empty()) {
+            auto node = *(st.begin());
+            int temp = node.first;
+            int wt = node.second;
+            st.erase(node);
+            
+            for(auto it : adj[temp]) {
+                int adjnode = it[0];
+                int edgewt = it[1];
                 if(wt + edgewt < dist[adjnode]) {
-                    dist[adjnode] = edgewt + wt;
-                    pq.push({node[0], dist[adjnode]});
+                    if(dist[adjnode] != 1e9)
+                        st.erase({adjnode, edgewt});
+                    dist[adjnode] = wt + edgewt;
+                    st.insert({adjnode, dist[adjnode]});
                 }
             }
         }
-        
         return dist;
     }
+    
 };
 
 
