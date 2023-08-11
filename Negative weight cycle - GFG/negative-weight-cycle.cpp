@@ -17,7 +17,7 @@ public:
 	            int v = node[1];
 	            int edgewt = node[2];
 	            
-	            if(edgewt + dist[v] < dist[u])
+	            if(dist[v] != 1e9 && edgewt + dist[v] < dist[u])
 	                dist[u] = edgewt + dist[v];
 	        }
 	    }
@@ -26,7 +26,7 @@ public:
             int u = node[0];
 	        int v = node[1];
 	        int edgewt = node[2];
-            if(edgewt + dist[v] < dist[u])
+            if(dist[v] != 1e9 && edgewt + dist[v] < dist[u])
 	            return true;
 	   }
 	   
