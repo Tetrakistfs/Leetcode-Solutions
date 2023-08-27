@@ -14,7 +14,7 @@ class Solution
         if(dp[n][k] != -1)  return dp[n][k];
         
         int mini = 1e9;
-        for(int i = 1; i < k; i++) {
+        for(int i = 1; i <= k; i++) {
             int eggBreak = f(n-1, i-1, dp);
             int eggNotBreak = f(n, k-i, dp);
             
