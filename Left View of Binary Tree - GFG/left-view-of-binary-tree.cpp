@@ -128,26 +128,40 @@ struct Node
  */
 
 //Function to return a list containing elements of left view of the binary tree.
+void func(Node *root, int level, vector<int>& res) {
+    if(root == NULL)    return;
+    if(res.size() == level)
+        res.push_back(root->data);
+    func(root->left, level+1, res);
+    func(root->right, level+1, res);
+}
+
 
 vector<int> leftView(Node *root)
 {
    // Your code here
-    vector<int> res;
-    if(root == NULL) return res;
-    queue<Node*> q;
-    q.push(root);
+//     vector<int> res;
+//     if(root == NULL) return res;
+//     queue<Node*> q;
+//     q.push(root);
     
-    while(!q.empty()) {
-        Node *temp = q.front();
-        res.push_back(temp->data);
-        int n = q.size();
-        for(int i = 0; i < n; i++) {
-            Node *node = q.front();
-            if(node->left != NULL)  q.push(node->left);
-            if(node->right != NULL) q.push(node->right);
-            q.pop();
+//     while(!q.empty()) {
+//         Node *temp = q.front();
+//         res.push_back(temp->data);
+//         int n = q.size();
+//         for(int i = 0; i < n; i++) {
+//             Node *node = q.front();
+//             if(node->left != NULL)  q.push(node->left);
+//             if(node->right != NULL) q.push(node->right);
+//             q.pop();
         
-        }
-    }
-   return res;
+//         }
+//     }
+//   return res;
+    
+                            /***OPTIMIZES APPROACH***/
+    vector<int> res;
+    func(root, 0, res);
+    return res;
+
 }
