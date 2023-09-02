@@ -96,25 +96,40 @@ Node* buildTree(string str)
 class Solution {
   public:
     int size = 1e5;
-    map<int, pair<int, int>> mp;
-    void func(Node *root, int hlvl, int vlvl) {
-        if(root == NULL)    return;
-        if(vlvl >= mp[hlvl + size].first)  {
-            mp[hlvl + size].first = vlvl;
-            mp[hlvl + size].second = root->data;
-        }
-        func(root->left, hlvl-1, vlvl+1);
-        func(root->right, hlvl+1, vlvl+1);
-    }
+    // map<int, pair<int, int>> mp;
+    // void func(Node *root, int hlvl, int vlvl) {
+    //     if(root == NULL)    return;
+    //     if(vlvl >= mp[hlvl + size].first)  {
+    //         mp[hlvl + size].first = vlvl;
+    //         mp[hlvl + size].second = root->data;
+    //     }
+    //     func(root->left, hlvl-1, vlvl+1);
+    //     func(root->right, hlvl+1, vlvl+1);
+    // }
   
     vector <int> bottomView(Node *root) {
         // Your Code Here
-        func(root, 0, 0);
+        queue<pair<Node*, int>> q;
+        map<int, int> mp;
+        q.push({root, 0});
+        
+        while(!q.empty()) {
+            Node *node = q.front().first;
+            int hlvl = q.front().second;
+            q.pop();
+            
+            // if(mp.find(hlvl) == mp.end()) {
+                mp[hlvl] = node->data;
+            // }
+            
+            if(node->left) q.push({node->left, hlvl - 1});
+            if(node->right) q.push({node->right, hlvl + 1});
+        }
+        
         vector<int> res;
-        
-        for(auto it : mp)
-            res.push_back(it.second.second);
-        
+        for(auto it : mp) {
+            res.push_back(it.second);
+        }
         return res;
     }
 };
