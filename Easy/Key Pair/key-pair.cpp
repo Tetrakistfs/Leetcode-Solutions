@@ -10,17 +10,28 @@ class Solution{
 public:	
 	// Function to check if array has 2 elements
 	// whose sum is equal to the given value
+	bool binarySearch(int l, int h, int key, int arr[], int n) {
+	    if(l > h)   return false;
+	    int mid = l + (h-l)/2;
+	    
+	    if(arr[mid] == key) return true;
+	    else if(key > arr[mid]) {
+	        return binarySearch(mid+1, h, key, arr, n);
+	    }
+	    else {
+	        return binarySearch(l, mid-1, key, arr, n);
+	    }
+	}
+	
 	bool hasArrayTwoCandidates(int arr[], int n, int x) {
 	    // code here
 	    sort(arr, arr+n);
-	    int l = 0, h = n-1;
-	    while(l < h) {
-	       if(arr[l] + arr[h] == x) return true;
-	       else if(arr[l] + arr[h] < x)
-	            l++;
-	       else 
-	            h--;
-	            
+	    for(int i = 0; i < n; i++) {
+	        if(arr[i] <= x) {
+	            int target = x - arr[i];
+	            if(binarySearch(i+1, n-1, target, arr, n))   
+	                return true;
+	        }
 	    }
 	    
 	    return false;
